@@ -11,12 +11,12 @@ app.get('/', (req, res) => {
 
 app.post('/upi/qr/generate', async (req, res) => {
 
-    console.log('EZETAP_USERNAME', process.env.EZETAP_USERNAME);
-    console.log('EZETAP_APP_KEY', process.env.EZETAP_APP_KEY);
+  console.log('EZETAP_USERNAME', process.env.EZETAP_USERNAME);
+  console.log('EZETAP_APP_KEY', process.env.EZETAP_APP_KEY);
 
   try {
     const payload = {
-      // accountLabel: "store001",
+      accountLabel: "Pabesto_01_A",
       amount: req.body.amount,
       externalRefNumber: req.body.externalRefNumber,
       username: process.env.EZETAP_USERNAME,
@@ -25,6 +25,8 @@ app.post('/upi/qr/generate', async (req, res) => {
       customerMobileNumber: req.body.customerMobileNumber,
       customerEmail: req.body.customerEmail
     };
+
+    console.log(payload);
 
     const { data } = await axios.post(
       `${process.env.EZETAP_BASE_URL}/api/2.0/merchant/upi/qrcode/generate`,
@@ -52,7 +54,7 @@ app.post('/upi/status', async (req, res) => {
     const payload = {
       username: process.env.EZETAP_USERNAME,
       appKey: process.env.EZETAP_APP_KEY,
-    //   txnId: req.body.txnId,
+      //   txnId: req.body.txnId,
       externalRefNumber: req.body.externalRefNumber,
     };
 
