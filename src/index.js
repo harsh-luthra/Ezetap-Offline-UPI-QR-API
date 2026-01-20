@@ -3,6 +3,16 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
+// For Production
+// const BASE_URL = process.env.EZETAP_PROD_BASE_URL;
+// const USERNAME = process.env.EZETAP_PROD_USERNAME;
+// const APP_KEY = process.env.EZETAP_PROD_APP_KEY;
+
+// For Demo
+const BASE_URL = process.env.EZETAP_DEMO_BASE_URL;
+const USERNAME = process.env.EZETAP_DEMO_USERNAME;
+const APP_KEY = process.env.EZETAP_DEMO_APP_KEY;
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -11,16 +21,16 @@ app.get('/', (req, res) => {
 
 app.post('/upi/qr/generate', async (req, res) => {
 
-  console.log('EZETAP_USERNAME', process.env.EZETAP_USERNAME);
-  console.log('EZETAP_APP_KEY', process.env.EZETAP_APP_KEY);
+  console.log('EZETAP_USERNAME', USERNAME);
+  console.log('EZETAP_APP_KEY', APP_KEY);
 
   try {
     const payload = {
       accountLabel: "Pabesto_01_A",
       amount: req.body.amount,
       externalRefNumber: req.body.externalRefNumber,
-      username: process.env.EZETAP_USERNAME,
-      appKey: process.env.EZETAP_APP_KEY,
+      username: USERNAME,
+      appKey: APP_KEY,
       customerName: req.body.customerName,
       customerMobileNumber: req.body.customerMobileNumber,
       customerEmail: req.body.customerEmail
@@ -29,7 +39,7 @@ app.post('/upi/qr/generate', async (req, res) => {
     console.log(payload);
 
     const { data } = await axios.post(
-      `${process.env.EZETAP_BASE_URL}/api/2.0/merchant/upi/qrcode/generate`,
+      `${BASE_URL}/api/2.0/merchant/upi/qrcode/generate`,
       payload,
       { headers: { 'Content-Type': 'application/json' } }
     );
@@ -52,14 +62,14 @@ app.post('/upi/qr/generate', async (req, res) => {
 app.post('/upi/status', async (req, res) => {
   try {
     const payload = {
-      username: process.env.EZETAP_USERNAME,
-      appKey: process.env.EZETAP_APP_KEY,
+      username: USERNAME,
+      appKey: APP_KEY,
       //   txnId: req.body.txnId,
       externalRefNumber: req.body.externalRefNumber,
     };
 
     const { data } = await axios.post(
-      `${process.env.EZETAP_BASE_URL}/api/2.0/payment/status`,
+      `${BASE_URL}/api/2.0/payment/status`,
       payload,
       { headers: { 'Content-Type': 'application/json' } }
     );
@@ -82,11 +92,11 @@ app.post('/upi/status', async (req, res) => {
 app.get('/upi/status/:txnId', async (req, res) => {
   const payload = {
     txnId: req.params.txnId,
-    username: process.env.EZETAP_USERNAME
+    username: USERNAME
   };
 
   const { data } = await axios.post(
-    `${process.env.EZETAP_BASE_URL}/api/2.0/payment/status`,
+    `${BASE_URL}/api/2.0/payment/status`,
     payload
   );
 
@@ -97,12 +107,12 @@ app.get('/upi/status/:txnId', async (req, res) => {
 app.post('/upi/stop', async (req, res) => {
   const payload = {
     txnId: req.body.txnId,
-    username: process.env.EZETAP_USERNAME,
-    appKey: process.env.EZETAP_APP_KEY
+    username: USERNAME,
+    appKey: APP_KEY
   };
 
   const { data } = await axios.post(
-    `${process.env.EZETAP_BASE_URL}/api/2.0/payment/stopPayment`,
+    `${BASE_URL}/api/2.0/payment/stopPayment`,
     payload
   );
 
