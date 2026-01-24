@@ -4,14 +4,14 @@ const axios = require('axios');
 const app = express();
 
 // For Production
-// const BASE_URL = process.env.EZETAP_PROD_BASE_URL;
-// const USERNAME = process.env.EZETAP_PROD_USERNAME;
-// const APP_KEY = process.env.EZETAP_PROD_APP_KEY;
+const BASE_URL = process.env.EZETAP_PROD_BASE_URL;
+const USERNAME = process.env.EZETAP_PROD_USERNAME;
+const APP_KEY = process.env.EZETAP_PROD_APP_KEY;
 
 // For Demo
-const BASE_URL = process.env.EZETAP_DEMO_BASE_URL;
-const USERNAME = process.env.EZETAP_DEMO_USERNAME;
-const APP_KEY = process.env.EZETAP_DEMO_APP_KEY;
+// const BASE_URL = process.env.EZETAP_DEMO_BASE_URL;
+// const USERNAME = process.env.EZETAP_DEMO_USERNAME;
+// const APP_KEY = process.env.EZETAP_DEMO_APP_KEY;
 
 app.use(express.json());
 
